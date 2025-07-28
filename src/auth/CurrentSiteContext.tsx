@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { setTenantId } from '../data/httpClient';
 
 interface CurrentSiteContextProps {
   siteId: string | null;
@@ -7,8 +8,24 @@ interface CurrentSiteContextProps {
 
 const CurrentSiteContext = createContext<CurrentSiteContextProps | undefined>(undefined);
 
+const STORAGE_KEY = 'saas_current_site';
+
 export const CurrentSiteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [siteId, setSiteId] = useState<string | null>(null);
+  const [siteId, setSiteIdState] = useState<string | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      setSiteIdState(saved);
+      setTenantId(saved);
+    }
+  }, []);
+
+  const setSiteId = (id: string) => {
+    setSiteIdState(id);
+    localStorage.setItem(STORAGE_KEY, id);
+    setTenantId(id);
+  };
 
   return (
     <CurrentSiteContext.Provider value={{ siteId, setSiteId }}>
