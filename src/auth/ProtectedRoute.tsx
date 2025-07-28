@@ -11,7 +11,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }
   }
 
   if (!['site_owner', 'operator'].includes(user.role)) {
-    return <div>Insufficient permissions.</div>;
+    return <div>403 - Access denied</div>;
   }
 
   return children;
