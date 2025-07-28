@@ -1,12 +1,8 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 import SiteSelector from './SiteSelector';
-import { setTenantId } from '../data/httpClient';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const handleSiteChange = (id: string) => {
-    setTenantId(id);
-  };
 
   return (
     <Box>
@@ -15,7 +11,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Customer Panel
           </Typography>
-          <SiteSelector onChange={handleSiteChange} />
+          <SiteSelector />
         </Toolbar>
       </AppBar>
       <Box sx={{ p: 2 }}>{children}</Box>
